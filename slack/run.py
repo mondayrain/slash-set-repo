@@ -26,20 +26,31 @@ def set_repo():
     params = parse_params(request)
     if not params['token']:  # or some other failure condition
         abort(400)
-    else:
-        print("Token is {}".format(params['token']))
 
-    return "Repo {} has been set with message {}"
+    repo_name, message = tuple(params["text"].split(' ', 1))
+
+    if set_repose["repos"].get(repo_name):
+        return "Repo {} has already been set with message '{}'. Please first unset it.".format(repo_name, set_repos["repos"][repo_name])
+    else:
+        set_repos["repos"][repo_name] = message
+        return "Setting repo '{}' with message '{}'".format(repo_name, message)
 
 @app.route('/unset-repo', methods=['POST'])
 def unset_repo():
     params = parse_params(request)
     if not params['token']:
         abort(400)
-    else:
-        print("Token is {}".format(params['token']))
 
-    return "Repo has been UNSET"
+    repo_name = params["text"]
+    repo_was_set = set_repos.pop(repo_name, None)
+
+    if repo_was_set:
+        return "Repo {} has been unset".format(repo_name)
+    else:
+        return "Repo {} was not set; nothing to unset.".format(repo_name)
+    
+
+    
 
 @app.route('/get-repos', methods=['GET'])
 def get_repos():
