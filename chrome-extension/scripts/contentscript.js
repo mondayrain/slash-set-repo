@@ -20,12 +20,12 @@ chrome.runtime.sendMessage({
         message_div.className = "branch-action-item js-details-container slash-set-repo"
 
         var header = document.createElement('h3');
-        header.className = "status-heading h4 text-red";
-        header.textContent = response_json["user"] + " says:"
+        header.className = "status-heading h4 text-purple";
+        header.textContent = "Message from " + response_json[repo_name]["user"] + ":"
 
         var message = document.createElement("p")
         message.className = "text-emphasized";
-        message.textContent = response_json["message"]
+        message.textContent = response_json[repo_name]["message"]
 
         message_div.appendChild(header);
         message_div.appendChild(message);
