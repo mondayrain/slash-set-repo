@@ -10,7 +10,7 @@
         "http://slash-set.ngrok.io/*"
     ],
     "content_scripts": [{
-        "matches": ["https://github.com/wealthsimple/*/pull/*"],
+        "matches": ["https://github.com/wealthsimple/*"],
         "js": ["scripts/contentscript.js"],
         "run_at": "document_end"
     }],

@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
         var xhttp = new XMLHttpRequest();
 
         xhttp.onload = function() {
-            callback(xhttp.responseText);
+            callback(JSON.parse(xhttp.responseText));
         };
         xhttp.onerror = function() {
             console.log("Oops, error from Slack server");
