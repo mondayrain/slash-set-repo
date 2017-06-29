@@ -22,6 +22,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
             currentWindow: true
         };
         chrome.tabs.query(queryInfo, function(tabs) {
+            console.log(tabs);
             callback(tabs[0].url);
         });
         return true;

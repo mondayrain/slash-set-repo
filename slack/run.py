@@ -84,4 +84,4 @@ def _parse_params(request):
     return { 'token': token, 'command': command, 'text': text, 'user': user }
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
