@@ -1,4 +1,5 @@
-var MESSAGES_URL = "http://slash-set.ngrok.io/get-repo-messages-json";
+// Make sure to add this endpoint to manifest.json permissions
+var MESSAGES_URL = "<PATH-TO-SLACK-SERVER-ENDPOINT>/get-repo-messages-json";
 
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
     if (request.type == "get_messages") {
