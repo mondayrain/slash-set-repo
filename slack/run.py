@@ -1,17 +1,15 @@
 from flask import Flask, request, abort
 import json
 
-# The parameters included in a slash command request (with example values):
-#   token=gIkuvaNzQIHg97ATvDxqgjtO
-#   team_id=T0001
-#   team_domain=example
-#   channel_id=C2147483705
-#   channel_name=test
-#   user_id=U2147483697
-#   user=Steve
-#   command=/weather
-#   text=94070
-#   response_url=https://hooks.slack.com/commands/1234/5678
+"""
+Basic server that allows you to set, unset, and retrieve GitHub repository messages.
+
+Messages for repos are set through Slack slash commands making POSTs to set-repo-message
+and unset-repo-message endpoints.
+
+The Chrome extension then queries the server with get-repo-messages
+whenever the user is on GitHub to check if any messages have been set for the relevant repository.
+"""
 
 set_repos = {}
 
@@ -70,7 +68,7 @@ def get_repos():
 
     return response
 
-@app.route('/get-repo-messages-json', methods=['POST'])
+@app.route('/get-repo-messages-json', methods=['GET'])
 def get_repos_json():
     repos = {}
     for name, repo in set_repos.items():

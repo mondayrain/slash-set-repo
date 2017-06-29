@@ -1,11 +1,22 @@
-'use strict';
+chrome.runtime.onMessage.addListener(function(request, sender, callback) {
+    if (request.action == "xhttp") {
+        var xhttp = new XMLHttpRequest();
+        var method = request.method ? request.method.toUpperCase() : 'GET';
 
-chrome.runtime.onInstalled.addListener(function (details) {
-  console.log('previousVersion', details.previousVersion);
-});
+        xhttp.onload = function() {
+            callback(xhttp.responseText);
+        };
+        xhttp.onerror = function() {
+            console.log("Oops, error from Slack server");
+            callback();
+        };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-  if (request.subject === 'localStorage') {
-    sendResponse({localStorage: localStorage});
-  }
+        console.log(request.url);
+        xhttp.open(method, request.url, true);
+        if (method == 'POST') {
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        xhttp.send();
+        return true;
+    }
 });
