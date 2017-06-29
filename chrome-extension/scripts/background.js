@@ -1,7 +1,8 @@
+var MESSAGES_URL = "http://slash-set.ngrok.io/get-repo-messages-json";
+
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
-    if (request.action == "xhttp") {
+    if (request.type == "get_messages") {
         var xhttp = new XMLHttpRequest();
-        var method = request.method ? request.method.toUpperCase() : 'GET';
 
         xhttp.onload = function() {
             callback(xhttp.responseText);
@@ -11,12 +12,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
             callback();
         };
 
-        console.log(request.url);
-        xhttp.open(method, request.url, true);
-        if (method == 'POST') {
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        }
+        xhttp.open('GET', MESSAGES_URL, true);
         xhttp.send();
+        return true;
+    } else if (request.type == "get_repo_name") {
+        var queryInfo = {
+            active: true,
+            currentWindow: true
+        };
+        chrome.tabs.query(queryInfo, function(tabs) {
+            callback(tabs[0].url);
+        });
         return true;
     }
 });

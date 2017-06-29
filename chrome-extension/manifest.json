@@ -5,12 +5,14 @@
     "description": "Companion to Slack slash set repo tool",
     "permissions": [
         "notifications",
-        "tabs", "<all_urls>",
+        "tabs",
+        "activeTab",
         "http://slash-set.ngrok.io/*"
     ],
     "content_scripts": [{
         "matches": ["https://github.com/wealthsimple/*/pull/*"],
-        "js": ["scripts/contentscript.js"]
+        "js": ["scripts/contentscript.js"],
+        "run_at": "document_end"
     }],
     "background": {
         "scripts": ["scripts/background.js"],
